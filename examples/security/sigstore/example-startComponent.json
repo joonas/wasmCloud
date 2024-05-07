@@ -1,0 +1,33 @@
+{
+  "requestId": "018f50ce-8228-e7c4-bb0a-e0754be7794c",
+  "kind": "startComponent",
+  "version": "v1",
+  "request": {
+    "componentId": "rust_hello_world-http_component",
+    "imageRef": "ttl.sh/7ff4b92b-1344-4852-87d5-01f3c35a4656:1h",
+    "maxInstances": 1,
+    "annotations": {
+      "wasmcloud.dev/appspec": "rust-hello-world",
+      "wasmcloud.dev/managed-by": "wadm",
+      "wasmcloud.dev/scaler": "componentspreadscaler-rust-hello-world-http-component-rust_hello_world-http_component",
+      "wasmcloud.dev/spread_name": "default"
+    },
+    "claims": {
+      "publicKey": "MACBPOMJIOBAEYNR5OJT4Y6TFXDYXXHTSU3K7W4F5JEYNSWL5H53GLXB",
+      "issuer": "AAWH546VNHX72TNO2QGBNVFOTQWHLR7ZKVTS5VHLSHLV4X4FIV4FLF7T",
+      "issuedAt": "1715024296",
+      "expiresAt": null,
+      "expired": false
+    }
+  },
+  "host": {
+    "publicKey": "NAI3KK662XTOZVFN7MISZ6NO5IYDSFWNCXJE5L7VNLTEXOZDX6V6JMQ2",
+    "lattice": "default",
+    "labels": {
+      "hostcore.arch": "aarch64",
+      "kubernetes": "true",
+      "hostcore.osfamily": "unix",
+      "hostcore.os": "linux"
+    }
+  }
+}
