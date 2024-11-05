@@ -7,9 +7,9 @@ toolchain go1.23.2
 require (
 	github.com/bytecodealliance/wasm-tools-go v0.3.0
 	go.opentelemetry.io/otel v1.31.0
-	go.opentelemetry.io/otel/exporters/stdout/stdouttrace v1.31.0
 	go.opentelemetry.io/otel/sdk v1.31.0
 	go.opentelemetry.io/otel/trace v1.31.0
+	go.opentelemetry.io/proto/otlp v1.3.1
 	go.wasmcloud.dev/component v0.0.3
 )
 
@@ -34,4 +34,5 @@ require (
 	golang.org/x/mod v0.21.0 // indirect
 	golang.org/x/sys v0.26.0 // indirect
 	golang.org/x/text v0.18.0 // indirect
+	google.golang.org/protobuf v1.34.1 // indirect
 )
