@@ -13,7 +13,8 @@ require (
 	go.wasmcloud.dev/component v0.0.3
 )
 
-replace go.wasmcloud.dev/component => github.com/wasmcloud/component-sdk-go v0.0.4-0.20241028180114-9bb991602394
+//replace go.wasmcloud.dev/component => github.com/wasmcloud/component-sdk-go v0.0.4-0.20241028180114-9bb991602394
+replace go.wasmcloud.dev/component => ../../../../../component-sdk-go
 
 require (
 	github.com/coreos/go-semver v0.3.1 // indirect

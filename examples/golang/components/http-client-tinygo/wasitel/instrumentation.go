@@ -1,15 +1,15 @@
 package wasitel
 
 import (
+	"github.com/wasmcloud/wasmcloud/examples/golang/components/http-client-tinygo/wasitel/types/common"
 	"go.opentelemetry.io/otel/sdk/instrumentation"
-	commonpb "go.opentelemetry.io/proto/otlp/common/v1"
 )
 
-func InstrumentationScope(il instrumentation.Scope) *commonpb.InstrumentationScope {
+func InstrumentationScope(il instrumentation.Scope) *common.InstrumentationScope {
 	if il == (instrumentation.Scope{}) {
 		return nil
 	}
-	return &commonpb.InstrumentationScope{
+	return &common.InstrumentationScope{
 		Name:    il.Name,
 		Version: il.Version,
 	}

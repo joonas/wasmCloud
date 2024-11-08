@@ -9,30 +9,21 @@ import (
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/propagation"
 	"go.opentelemetry.io/otel/sdk/trace"
-	"go.wasmcloud.dev/component/log/wasilog"
 )
 
 func setupOTelSDK(client *http.Client) error {
-	logger := wasilog.ContextLogger("otel")
-	logger.Info("start")
 	// Set up propagator.
 	prop := newPropagator()
-	logger.Info("newPropagator")
 	otel.SetTextMapPropagator(prop)
-	logger.Info("SetTextMapPropagator")
 
 	// // Set up trace provider.
 	// _, _ := newTraceProvider(client)
 	tp, err := newTraceProvider(client)
-	logger.Info("newTraceProvider")
 	if err != nil {
 		return err
 	}
-	logger.Info("pre SetTracerProvider")
 	otel.SetTracerProvider(tp)
-	logger.Info("post SetTracerProvider")
 
-	logger.Info("end")
 	return nil
 }
 

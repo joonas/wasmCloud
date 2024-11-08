@@ -8,11 +8,15 @@ import (
 	"net/http"
 
 	"go.opentelemetry.io/otel/sdk/trace"
+
+	types "github.com/wasmcloud/wasmcloud/examples/golang/components/http-client-tinygo/wasitel/types/trace"
 )
 
 var _ trace.SpanExporter = &Exporter{}
 
-const defaultUrl = "http://localhost:9999"
+const defaultUrl = "http://localhost:4318/v1/traces"
+
+// const defaultUrl = "http://localhost:8989/v1/traces"
 
 // TODO: Consider adding context as the first argument here
 func New(opts ...Option) (*Exporter, error) {
@@ -34,11 +38,13 @@ func (e *Exporter) ExportSpans(ctx context.Context, spans []trace.ReadOnlySpan) 
 		return nil
 	}
 	resourceSpans := convertSpans(spans)
-	body, err := json.Marshal(resourceSpans)
+	svcReq := &types.ExportTraceServiceRequest{
+		ResourceSpanss: resourceSpans,
+	}
+	body, err := json.Marshal(svcReq)
 	if err != nil {
 		return fmt.Errorf("failed to serialize zipkin models to JSON: %w", err)
 	}
-	// req, err := http.NewRequestWithContext(ctx, http.MethodPost, defaultUrl, bytes.NewBuffer(body))
 	req, err := http.NewRequest(http.MethodPost, defaultUrl, bytes.NewBuffer(body))
 	if err != nil {
 		return fmt.Errorf("failed to create request to %s: %w", defaultUrl, err)

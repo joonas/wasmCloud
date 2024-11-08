@@ -1,24 +1,24 @@
 package wasitel
 
 import (
+	types "github.com/wasmcloud/wasmcloud/examples/golang/components/http-client-tinygo/wasitel/types/trace"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/sdk/instrumentation"
 	"go.opentelemetry.io/otel/sdk/trace"
-	tracepb "go.opentelemetry.io/proto/otlp/trace/v1"
 )
 
-func convertSpans(spans []trace.ReadOnlySpan) []*tracepb.ResourceSpans {
+func convertSpans(spans []trace.ReadOnlySpan) []*types.ResourceSpans {
 	if len(spans) == 0 {
 		return nil
 	}
 
-	rsm := make(map[attribute.Distinct]*tracepb.ResourceSpans)
+	rsm := make(map[attribute.Distinct]*types.ResourceSpans)
 
 	type key struct {
 		r  attribute.Distinct
 		is instrumentation.Scope
 	}
-	ssm := make(map[key]*tracepb.ScopeSpans)
+	ssm := make(map[key]*types.ScopeSpans)
 
 	var resources int
 	for _, span := range spans {
@@ -34,9 +34,9 @@ func convertSpans(spans []trace.ReadOnlySpan) []*tracepb.ResourceSpans {
 		scopeSpan, iOk := ssm[k]
 		if !iOk {
 			// Either the resource or instrumentation scope were unknown.
-			scopeSpan = &tracepb.ScopeSpans{
+			scopeSpan = &types.ScopeSpans{
 				Scope:     InstrumentationScope(span.InstrumentationScope()),
-				Spans:     []*tracepb.Span{},
+				Spans:     []*types.Span{},
 				SchemaUrl: span.InstrumentationScope().SchemaURL,
 			}
 		}
@@ -47,9 +47,9 @@ func convertSpans(spans []trace.ReadOnlySpan) []*tracepb.ResourceSpans {
 		if !rOk {
 			resources++
 			// The resource was unknown.
-			rs = &tracepb.ResourceSpans{
+			rs = &types.ResourceSpans{
 				Resource:   Resource(span.Resource()),
-				ScopeSpans: []*tracepb.ScopeSpans{scopeSpan},
+				ScopeSpans: []*types.ScopeSpans{scopeSpan},
 				SchemaUrl:  span.Resource().SchemaURL(),
 			}
 			rsm[rKey] = rs
@@ -58,7 +58,7 @@ func convertSpans(spans []trace.ReadOnlySpan) []*tracepb.ResourceSpans {
 
 		// The resource has been seen before. Check if the instrumentation
 		// library lookup was unknown because if so we need to add it to the
-		// ResourceSpans. Otherwise, the instrumentation library has already
+		// ResourceSpanss. Otherwise, the instrumentation library has already
 		// been seen and the append we did above will be included it in the
 		// ScopeSpans reference.
 		if !iOk {
@@ -67,7 +67,7 @@ func convertSpans(spans []trace.ReadOnlySpan) []*tracepb.ResourceSpans {
 	}
 
 	// Transform the categorized map into a slice
-	rss := make([]*tracepb.ResourceSpans, 0, resources)
+	rss := make([]*types.ResourceSpans, 0, resources)
 	for _, rs := range rsm {
 		rss = append(rss, rs)
 	}
