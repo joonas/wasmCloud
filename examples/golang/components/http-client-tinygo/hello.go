@@ -9,8 +9,8 @@ import (
 	"time"
 
 	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/attribute"
 
-	// "github.com/wasmcloud/wasmcloud/examples/golang/components/http-client-tinygo/wasiihttp"
 	"go.wasmcloud.dev/component/log/wasilog"
 	"go.wasmcloud.dev/component/net/wasihttp"
 )
@@ -30,9 +30,10 @@ func init() {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	setupOTelSDK(httpClient)
+	setupOTelSDK()
 	logger := wasilog.ContextLogger("handler")
-	_, span := tracer.Start(r.Context(), "hello-handler")
+	_, span := tracer.Start(r.Context(), "http-client-tinygo")
+	defer span.End()
 
 	url := "https://dog.ceo/api/breeds/image/random"
 	req, err := http.NewRequest(http.MethodGet, url, nil)
@@ -41,7 +42,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, fmt.Sprintf("handler: failed to create outbound request: %s", err), http.StatusInternalServerError)
 		return
 	}
-	// span.SetAttributes(attribute.String("url", url))
+	span.SetAttributes(attribute.String("url", url))
 
 	resp, err := httpClient.Do(req)
 	if err != nil {
@@ -52,7 +53,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(resp.StatusCode)
 
-	span.End()
 	_, _ = io.Copy(w, resp.Body)
 }
 

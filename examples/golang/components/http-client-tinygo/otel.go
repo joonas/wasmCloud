@@ -1,24 +1,23 @@
 package main
 
 import (
-	"net/http"
 	"time"
 	_ "unsafe"
 
-	"github.com/wasmcloud/wasmcloud/examples/golang/components/http-client-tinygo/wasitel"
+	"go.wasmcloud.dev/component/x/wasitel/wasiteltrace"
+
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/propagation"
 	"go.opentelemetry.io/otel/sdk/trace"
 )
 
-func setupOTelSDK(client *http.Client) error {
+func setupOTelSDK() error {
 	// Set up propagator.
 	prop := newPropagator()
 	otel.SetTextMapPropagator(prop)
 
 	// // Set up trace provider.
-	// _, _ := newTraceProvider(client)
-	tp, err := newTraceProvider(client)
+	tp, err := newTraceProvider()
 	if err != nil {
 		return err
 	}
@@ -34,8 +33,8 @@ func newPropagator() propagation.TextMapPropagator {
 	)
 }
 
-func newTraceProvider(client *http.Client) (*trace.TracerProvider, error) {
-	traceExporter, err := wasitel.New(wasitel.WithHTTPClient(client))
+func newTraceProvider() (*trace.TracerProvider, error) {
+	traceExporter, err := wasiteltrace.New()
 	if err != nil {
 		return nil, err
 	}
