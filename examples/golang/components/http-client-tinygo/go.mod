@@ -8,7 +8,7 @@ require (
 	go.opentelemetry.io/otel/sdk v1.31.0
 	go.opentelemetry.io/otel/trace v1.31.0
 	go.wasmcloud.dev/component v0.0.5
-	go.wasmcloud.dev/component/x/wasitel v0.0.0
+	go.wasmcloud.dev/component/x/wasitel v0.0.1
 )
 
 require (
@@ -31,5 +31,3 @@ require (
 	golang.org/x/sys v0.26.0 // indirect
 	golang.org/x/text v0.18.0 // indirect
 )
-
-replace go.wasmcloud.dev/component/x/wasitel => github.com/wasmcloud/component-sdk-go/x/wasitel v0.0.0-20241111225151-497606505aed
