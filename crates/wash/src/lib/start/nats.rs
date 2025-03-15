@@ -31,7 +31,7 @@ pub const NATS_SERVER_BINARY: &str = "nats-server.exe";
 /// # #[tokio::main]
 /// # async fn main() {
 /// use crate::lib::start::ensure_nats_server;
-/// let res = ensure_nats_server("v2.10.7", "/tmp/").await;
+/// let res = ensure_nats_server("v2.10.26", "/tmp/").await;
 /// assert!(res.is_ok());
 /// assert!(res.unwrap().to_string_lossy() == "/tmp/nats-server");
 /// # }
@@ -61,7 +61,7 @@ where
 /// use crate::lib::start::ensure_nats_server_for_os_arch_pair;
 /// let os = std::env::consts::OS;
 /// let arch = std::env::consts::ARCH;
-/// let res = ensure_nats_server_for_os_arch_pair(os, arch, "v2.10.7", "/tmp/").await;
+/// let res = ensure_nats_server_for_os_arch_pair(os, arch, "v2.10.26", "/tmp/").await;
 /// assert!(res.is_ok());
 /// assert!(res.unwrap().to_string_lossy() == "/tmp/nats-server");
 /// # }
@@ -120,7 +120,7 @@ where
 /// # #[tokio::main]
 /// # async fn main() {
 /// use crate::lib::start::download_nats_server;
-/// let res = download_nats_server("v2.10.7", "/tmp/").await;
+/// let res = download_nats_server("v2.10.26", "/tmp/").await;
 /// assert!(res.is_ok());
 /// assert!(res.unwrap().to_string_lossy() == "/tmp/nats-server");
 /// # }
